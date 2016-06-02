@@ -1,7 +1,6 @@
 # Jelastic OpenCMS Add-on
 
 This repository provides [OpenCMS](http://www.opencms.org/) add-on for Jelastic Platform.
-[![GET IT HOSTED](https://raw.githubusercontent.com/JelasticJPS/OpenCMS/master/images/getithosted.png)](http://go.jelastic.com/test?hoster-select=1&theme=modern&app=https://raw.githubusercontent.com/JelasticJPS/OpenCMS/master/OpenCMS-9.5.2.json)
 
 **OpenCMS** is a professional, easy to use website content management system from Alkacon Software
 
