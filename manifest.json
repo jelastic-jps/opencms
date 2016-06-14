@@ -2,7 +2,7 @@
 	"jpsType": "install",
 	"application": {
 		"id": "opencms",
-		"logo": "https://raw.githubusercontent.com/JelasticJPS/OpenCMS/master/images/opencms.png",
+		"logo": "https://raw.githubusercontent.com/jelastic-jps/OpenCMS/master/images/opencms.png",
 		"description": {
 			"text": "OpenCMS from Alkacon Software is a professional, easy to use website content management system. OpenCms helps content managers worldwide to create and maintain beautiful websites fast and efficiently."
 		},
@@ -24,7 +24,7 @@
 				}, {
 					"nodeType": "mysql5",
 					"database": {
-						"dump": "https://media.githubusercontent.com/media/JelasticJPS/OpenCMS/master/dumps/opencms.sql",
+						"dump": "https://media.githubusercontent.com/media/jelastic-jps/OpenCMS/master/dumps/opencms.sql",
 						"name": "opencms",
 						"user": "opencms"
 					}
@@ -68,7 +68,7 @@
 			"deployments": [{
 					"name": "opencms-9.5.2.zip",
 					"context": "ROOT",
-					"archive": "https://media.githubusercontent.com/media/JelasticJPS/OpenCMS/master/dumps/opencms-9.5.2.zip"
+					"archive": "https://media.githubusercontent.com/media/jelastic-jps/OpenCMS/master/dumps/opencms-9.5.2.zip"
 				}
 			]
 		},
