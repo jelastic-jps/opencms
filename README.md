@@ -13,7 +13,7 @@ OpenCms is based on Java and XML technology. It can be deployed in an open sourc
 
 ### Environment Topology
 
-![OpenCMS Topology](https://docs.google.com/drawings/d/1OiWoOLKAsOTuo2t5eKC93SPg66nwWgidiy8WuEbaVeM/pub?w=505&h=216)
+![opencms-environment-topology](images/opencms-environment-topology.png)
 
 ### Specifics
 
