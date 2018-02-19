@@ -52,12 +52,12 @@
 				"engine": "java7",
 				"nodes": [{
 						"extip": false,
-						"cloudlets": 16,
+						"cloudlets": 8,
 						"count": 1,
 						"nodeType": "tomcat7"
 					}, {
 						"extip": false,
-						"cloudlets": 16,
+						"cloudlets": 8,
 						"count": 1,
 						"nodeType": "mysql5"
 					}
