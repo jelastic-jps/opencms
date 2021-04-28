@@ -8,4 +8,6 @@ Login with these details:
 
 Please make sure to change the Password directly after the login.
 
+The Launchpad for the Management (after login) is found here:[https://${env.domain}/workplace#!launchpad](https://${env.domain}/workplace#!launchpad)  
+
 You can find OpenCMS documentation here: https://documentation.opencms.org/central/
