@@ -4,7 +4,7 @@ name: OpenCMS
 homepage: http://www.opencms.org/
 startPage: overview/
 logo: https://raw.githubusercontent.com/jelastic-jps/opencms/master/images/opencms.png
-baseUrl: https://raw.githubusercontent.com/panslothda/opencms/master
+baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
 description: OpenCMS from Alkacon Software is a professional, easy to use website
     content management system. OpenCms helps content managers worldwide to
     create and maintain beautiful websites fast and efficiently.
@@ -35,7 +35,7 @@ onInstall:
 actions:
   deploy:
     deploy:
-      archive: https://github.com/panslothda/opencms/raw/master/dumps/opencms-11.0.2.war
+      archive: https://github.com/jelastic-jps/opencms/raw/master/dumps/opencms-11.0.2.war
       name: opencms-11.0.2.war
       context: ROOT
 
