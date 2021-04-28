@@ -1,7 +1,7 @@
 type: install
 id: OpenCms
 name: OpenCMS
-homepage: 'http://www.opencms.org/'
+homepage: http://www.opencms.org/
 startPage: overview/
 logo: https://raw.githubusercontent.com/jelastic-jps/opencms/master/images/opencms.png
 baseUrl: https://raw.githubusercontent.com/panslothda/opencms/master
@@ -26,7 +26,6 @@ env:
       nodeType: mariadb10
 
 onInstall:
-#  - upload
   - deploy
   - set-SQL-settings
   - add-autonfig-file
@@ -34,12 +33,6 @@ onInstall:
   - restart
 
 actions:
-#  upload:
-#    upload:
-#      - nodeType: tomcat9
-#        sourcePath: ${baseUrl}/lib/mariadb-java-client-2.7.2.jar
-#        destPath: "/opt/tomcat/lib/mariadb-java-client-2.7.2.jar"
-  
   deploy:
     deploy:
       archive: https://github.com/panslothda/opencms/raw/master/dumps/opencms-11.0.2.war
@@ -61,7 +54,7 @@ actions:
     - cmd[cp]: |-
         echo "setup.webapp.path=/opt/tomcat/webapps/ROOT" >> /opt/tomcat/webapps/setup.properties
 				echo "setup.default.webapp=ROOT" >> /opt/tomcat/webapps/setup.properties
-				echo "setup.install.components=workplace,releasenotes,template3,devdemo,bootstrap" >> /opt/tomcat/webapps/setup.properties
+				echo "setup.install.components=workplace,demo" >> /opt/tomcat/webapps/setup.properties
 				echo "jdbc:mysql://${nodes.sqldb.address}/" >> /opt/tomcat/webapps/setup.properties
 				echo "db.product=mysql" >> /opt/tomcat/webapps/setup.properties
 				echo "db.provider=mysql" >> /opt/tomcat/webapps/setup.properties
@@ -75,7 +68,8 @@ actions:
 				echo "db.create.tables=true" >> /opt/tomcat/webapps/setup.properties
 				echo "db.dropDb=true" >> /opt/tomcat/webapps/setup.properties
 				echo "db.jdbc.driver=org.gjt.mm.mysql.Driver" >> /opt/tomcat/webapps/setup.properties
-				echo "server.url=https://${env.domain}/" >> /opt/tomcat/webapps/setup.properties
+				echo "server.url=https://${env.domain}" >> /opt/tomcat/webapps/setup.properties
+        echo "server.id=OpenCmsServer" >> /opt/tomcat/webapps/setup.properties
 
 	run-setup:
     - cmd[cp]: |-
@@ -89,46 +83,6 @@ actions:
     - restartContainers:
         nodeGroup: cp
 
-
 success:
   email: /text/success-text.md
   text: /text/success-text.md
-
-
-
-
-
-
-  #
-#    configs:
-#      - restart: true
-#        replacements:
-#          - replacement: max_allowed_packet = 1024M
-#            pattern: max_allowed_packet.*
-#        path: '${MYSQL_CONF}/my.cnf'
-#        nodeType: mysql5
-#      - nodeType: mysql5
-#        database:
-#          dump: >-
-#            https://media.githubusercontent.com/media/jelastic-jps/opencms/master/dumps/opencms.sql
-#          name: opencms
-#          user: opencms
-#      - restart: true
-#        replacements:
-#          - replacement: >-
-#              db.pool.default.jdbcUrl=jdbc:mysql://${nodes.mysql5.address}/opencms
-#            pattern: db.pool.default.jdbcUrl=
-#          - replacement: 'db.pool.default.user=${nodes.mysql5.database.user}'
-#            pattern: db.pool.default.user=
-#          - replacement: 'db.pool.default.password=${nodes.mysql5.database.password}'
-#            pattern: db.pool.default.password=
-#          - replacement: '${nodes.mysql5.database.name}'
-#            pattern: '{DB_NAME}'
-#        path: '${WEBAPPS}/ROOT/WEB-INF/config/opencms.properties'
-#        nodeType: tomcat7
-#
-#    deployments:
-#      - name: opencms-9.5.2.zip
-#        context: ROOT
-#        archive: >-
-#          https://media.githubusercontent.com/media/jelastic-jps/opencms/master/dumps/opencms-9.5.2.zip
