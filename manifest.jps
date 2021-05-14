@@ -13,7 +13,7 @@ categories:
   - apps/content-management
   - apps/cms
  
-sslstate: true
+ssl: true
 engine: java11
 
 nodes:
