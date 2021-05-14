@@ -1,81 +1,88 @@
-{
-	"jpsType": "install",
-	"application": {
-		"id": "opencms",
-		"logo": "https://raw.githubusercontent.com/jelastic-jps/opencms/master/images/opencms.png",
-		"description": {
-			"text": "OpenCMS from Alkacon Software is a professional, easy to use website content management system. OpenCms helps content managers worldwide to create and maintain beautiful websites fast and efficiently."
-		},
-		"success": {
-			"text": "Below you will find link to your CMS.<br><br> <table style='font-size:13px; border: none;'><tr><td>Application URL:</td><td style='padding-left: 10px;'><a href='${env.protocol}://${env.domain}/overview/' target='_blank'>${env.protocol}://${env.domain}/overview/</a></td></tr><tr><td>Username:</td><td style='padding-left: 10px;'>Admin</td></tr><tr><td>Password:</td><td style='padding-left: 10px;'>admin</td></tr></table> </br></br> For more information on advanced OpenCMS configuration visit <a href='http://www.opencms.org/en/demo/tour/index.html' target='_blank'>OpenCMS Guide</a>"
-		},
-		"name": "OpenCMS",
-		"categories": ["apps/cms", "apps/content-management"],
-		"env": {
-			"configs": [{
-					"restart": true,
-					"replacements": [{
-							"replacement": "max_allowed_packet = 1024M",
-							"pattern": "max_allowed_packet.*"
-						}
-					],
-					"path": "${MYSQL_CONF}/my.cnf",
-					"nodeType": "mysql5"
-				}, {
-					"nodeType": "mysql5",
-					"database": {
-						"dump": "https://media.githubusercontent.com/media/jelastic-jps/opencms/master/dumps/opencms.sql",
-						"name": "opencms",
-						"user": "opencms"
-					}
-				}, {
-					"restart": true,
-					"replacements": [{
-							"replacement": "db.pool.default.jdbcUrl=jdbc:mysql://${nodes.mysql5.address}/opencms",
-							"pattern": "db.pool.default.jdbcUrl="
-						}, {
-							"replacement": "db.pool.default.user=${nodes.mysql5.database.user}",
-							"pattern": "db.pool.default.user="
-						}, {
-							"replacement": "db.pool.default.password=${nodes.mysql5.database.password}",
-							"pattern": "db.pool.default.password="
-						}, {
-							"replacement": "${nodes.mysql5.database.name}",
-							"pattern": "{DB_NAME}"
-						}
-					],
-					"path": "${WEBAPPS}/ROOT/WEB-INF/config/opencms.properties",
-					"nodeType": "tomcat7"
-				}
-			],
-			"topology": {
-				"engine": "java7",
-				"nodes": [{
-						"extip": false,
-						"cloudlets": 8,
-						"count": 1,
-						"nodeType": "tomcat7"
-					}, {
-						"extip": false,
-						"cloudlets": 8,
-						"count": 1,
-						"nodeType": "mysql5"
-					}
-				],
-				"ssl": false,
-				"ha": false
-			},
-			"deployments": [{
-					"name": "opencms-9.5.2.zip",
-					"context": "ROOT",
-					"archive": "https://media.githubusercontent.com/media/jelastic-jps/opencms/master/dumps/opencms-9.5.2.zip"
-				}
-			]
-		},
-		"type": "java",
-		"homepage": "http://www.opencms.org/",
-		"version": "9.5.2",
-		"startPage": "overview/"
-	},
-	"jpsVersion": "0.2"
-}
+type: install
+id: OpenCms
+name: OpenCMS
+homepage: http://www.opencms.org/
+startPage: overview/
+logo: https://raw.githubusercontent.com/jelastic-jps/opencms/master/images/opencms.png
+baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
+description: OpenCMS from Alkacon Software is a professional, easy to use website
+    content management system. OpenCms helps content managers worldwide to
+    create and maintain beautiful websites fast and efficiently.
+
+categories:
+  - apps/content-management
+  - apps/cms
+ 
+env:
+  sslstate: true
+  topology:
+    engine: java11
+    nodes:
+    - cloudlets: 32
+      fixedCloudlets: 1
+      nodeType: tomcat9
+    - cloudlets: 8
+      fixedCloudlets: 2
+      nodeType: mariadb10
+
+onInstall:
+  - deploy
+  - set-SQL-settings
+  - add-autonfig-file
+  - run-setup
+  - restart
+
+actions:
+  deploy:
+    deploy:
+      archive: https://github.com/jelastic-jps/opencms/raw/master/dumps/opencms-11.0.2.war
+      name: opencms-11.0.2.war
+      context: ROOT
+
+  set-SQL-settings:
+    prepareSqlDatabase:
+      - nodeType: mariadb10
+        loginCredentials:
+          user: root
+          password: "${nodes.sqldb.password}"
+        newDatabaseUser:
+          name: opencms
+          password: "${user.appPassword}"
+    cmd [mariadb10]: mysql -u root -p${nodes.sqldb.password} -e "grant all privileges on *.* to 'opencms'@'%'"
+
+	add-autonfig-file:
+    - cmd[cp]: |-
+        echo "setup.webapp.path=/opt/tomcat/webapps/ROOT" >> /opt/tomcat/webapps/setup.properties
+				echo "setup.default.webapp=ROOT" >> /opt/tomcat/webapps/setup.properties
+				echo "setup.install.components=workplace,demo" >> /opt/tomcat/webapps/setup.properties
+				echo "jdbc:mysql://${nodes.sqldb.address}/" >> /opt/tomcat/webapps/setup.properties
+				echo "db.product=mysql" >> /opt/tomcat/webapps/setup.properties
+				echo "db.provider=mysql" >> /opt/tomcat/webapps/setup.properties
+				echo "db.create.user=root" >> /opt/tomcat/webapps/setup.properties
+				echo "db.create.pwd=${nodes.sqldb.password}" >> /opt/tomcat/webapps/setup.properties
+				echo "db.worker.user=opencms" >> /opt/tomcat/webapps/setup.properties
+				echo "db.worker.pwd=${user.appPassword}" >> /opt/tomcat/webapps/setup.properties
+				echo "db.connection.url=jdbc:mysql://${nodes.sqldb.address}/" >> /opt/tomcat/webapps/setup.properties
+				echo "db.name=db_opencms" >> /opt/tomcat/webapps/setup.properties
+				echo "db.create.db=true" >> /opt/tomcat/webapps/setup.properties
+				echo "db.create.tables=true" >> /opt/tomcat/webapps/setup.properties
+				echo "db.dropDb=true" >> /opt/tomcat/webapps/setup.properties
+				echo "db.jdbc.driver=org.gjt.mm.mysql.Driver" >> /opt/tomcat/webapps/setup.properties
+				echo "server.url=https://${env.domain}" >> /opt/tomcat/webapps/setup.properties
+        echo "server.id=OpenCmsServer" >> /opt/tomcat/webapps/setup.properties
+
+	run-setup:
+    - cmd[cp]: |-
+        cd /opt/tomcat/webapps/ROOT/WEB-INF
+        chmod +x ./setup.sh
+        ./setup.sh -path /opt/tomcat/webapps/setup.properties >> /var/log/run.log 2>&1
+
+  restart:
+    - restartContainers:
+        nodeGroup: sqldb
+    - restartContainers:
+        nodeGroup: cp
+
+success:
+  email: /text/success-text.md
+  text: /text/success-text.md
