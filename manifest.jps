@@ -1,9 +1,9 @@
 type: install
-id: OpenCms
+id: opencms
 name: OpenCMS
 homepage: http://www.opencms.org/
 startPage: overview/
-logo: https://raw.githubusercontent.com/jelastic-jps/opencms/master/images/opencms.png
+logo: /images/opencms.png
 baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
 description: OpenCMS from Alkacon Software is a professional, easy to use website
     content management system. OpenCms helps content managers worldwide to
@@ -13,17 +13,16 @@ categories:
   - apps/content-management
   - apps/cms
  
-env:
-  sslstate: true
-  topology:
-    engine: java11
-    nodes:
-    - cloudlets: 32
-      fixedCloudlets: 1
-      nodeType: tomcat9
-    - cloudlets: 8
-      fixedCloudlets: 2
-      nodeType: mariadb10
+sslstate: true
+engine: java11
+
+nodes:
+  - cloudlets: 32
+    fixedCloudlets: 1
+    nodeType: tomcat9
+  - cloudlets: 8
+    fixedCloudlets: 2
+    nodeType: mariadb10
 
 onInstall:
   - deploy
@@ -83,6 +82,4 @@ actions:
     - restartContainers:
         nodeGroup: cp
 
-success:
-  email: /text/success-text.md
-  text: /text/success-text.md
+success: /text/success-text.md
