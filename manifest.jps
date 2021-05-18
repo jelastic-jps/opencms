@@ -6,30 +6,27 @@ startPage: overview/
 logo: /images/opencms.png
 baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
 description: OpenCMS from Alkacon Software is a professional, easy to use website
-    content management system. OpenCms helps content managers worldwide to
-    create and maintain beautiful websites fast and efficiently.
-
+  content management system. OpenCms helps content managers worldwide to create and
+  maintain beautiful websites fast and efficiently.
 categories:
-  - apps/content-management
-  - apps/cms
- 
+- apps/content-management
+- apps/cms
 ssl: true
 engine: java11
-
 nodes:
-  - cloudlets: 32
-    fixedCloudlets: 1
-    nodeType: tomcat9
-  - cloudlets: 8
-    fixedCloudlets: 2
-    nodeType: mariadb10
+- cloudlets: 32
+  fixedCloudlets: 1
+  nodeType: tomcat9
+- cloudlets: 8
+  fixedCloudlets: 2
+  nodeType: mariadb10
 
 onInstall:
-  - deploy
-  - set-SQL-settings
-  - add-autonfig-file
-  - run-setup
-  - restart
+- deploy
+- set-SQL-settings
+- add-autonfig-file
+- run-setup
+- restart
 
 actions:
   deploy:
@@ -37,49 +34,45 @@ actions:
       archive: https://github.com/jelastic-jps/opencms/raw/master/dumps/opencms-11.0.2.war
       name: opencms-11.0.2.war
       context: ROOT
-
   set-SQL-settings:
     prepareSqlDatabase:
-      - nodeType: mariadb10
-        loginCredentials:
-          user: root
-          password: "${nodes.sqldb.password}"
-        newDatabaseUser:
-          name: opencms
-          password: "${user.appPassword}"
-    cmd [mariadb10]: mysql -u root -p${nodes.sqldb.password} -e "grant all privileges on *.* to 'opencms'@'%'"
-
-	add-autonfig-file:
-    - cmd[cp]: |-
-        echo "setup.webapp.path=/opt/tomcat/webapps/ROOT" >> /opt/tomcat/webapps/setup.properties
-				echo "setup.default.webapp=ROOT" >> /opt/tomcat/webapps/setup.properties
-				echo "setup.install.components=workplace,demo" >> /opt/tomcat/webapps/setup.properties
-				echo "jdbc:mysql://${nodes.sqldb.address}/" >> /opt/tomcat/webapps/setup.properties
-				echo "db.product=mysql" >> /opt/tomcat/webapps/setup.properties
-				echo "db.provider=mysql" >> /opt/tomcat/webapps/setup.properties
-				echo "db.create.user=root" >> /opt/tomcat/webapps/setup.properties
-				echo "db.create.pwd=${nodes.sqldb.password}" >> /opt/tomcat/webapps/setup.properties
-				echo "db.worker.user=opencms" >> /opt/tomcat/webapps/setup.properties
-				echo "db.worker.pwd=${user.appPassword}" >> /opt/tomcat/webapps/setup.properties
-				echo "db.connection.url=jdbc:mysql://${nodes.sqldb.address}/" >> /opt/tomcat/webapps/setup.properties
-				echo "db.name=db_opencms" >> /opt/tomcat/webapps/setup.properties
-				echo "db.create.db=true" >> /opt/tomcat/webapps/setup.properties
-				echo "db.create.tables=true" >> /opt/tomcat/webapps/setup.properties
-				echo "db.dropDb=true" >> /opt/tomcat/webapps/setup.properties
-				echo "db.jdbc.driver=org.gjt.mm.mysql.Driver" >> /opt/tomcat/webapps/setup.properties
-				echo "server.url=https://${env.domain}" >> /opt/tomcat/webapps/setup.properties
-        echo "server.id=OpenCmsServer" >> /opt/tomcat/webapps/setup.properties
-
-	run-setup:
-    - cmd[cp]: |-
-        cd /opt/tomcat/webapps/ROOT/WEB-INF
-        chmod +x ./setup.sh
-        ./setup.sh -path /opt/tomcat/webapps/setup.properties >> /var/log/run.log 2>&1
-
+    - nodeType: mariadb10
+      loginCredentials:
+        user: root
+        password: "${nodes.sqldb.password}"
+      newDatabaseUser:
+        name: opencms
+        password: "${user.appPassword}"
+    cmd [mariadb10]: mysql -u root -p${nodes.sqldb.password} -e "grant all privileges
+      on *.* to 'opencms'@'%'"
+  add-autonfig-file:
+  - cmd[cp]: |-
+      echo "setup.webapp.path=/opt/tomcat/webapps/ROOT" >> /opt/tomcat/webapps/setup.properties
+      echo "setup.default.webapp=ROOT" >> /opt/tomcat/webapps/setup.properties
+      echo "setup.install.components=workplace,demo" >> /opt/tomcat/webapps/setup.properties
+      echo "jdbc:mysql://${nodes.sqldb.address}/" >> /opt/tomcat/webapps/setup.properties
+      echo "db.product=mysql" >> /opt/tomcat/webapps/setup.properties
+      echo "db.provider=mysql" >> /opt/tomcat/webapps/setup.properties
+      echo "db.create.user=root" >> /opt/tomcat/webapps/setup.properties
+      echo "db.create.pwd=${nodes.sqldb.password}" >> /opt/tomcat/webapps/setup.properties
+      echo "db.worker.user=opencms" >> /opt/tomcat/webapps/setup.properties
+      echo "db.worker.pwd=${user.appPassword}" >> /opt/tomcat/webapps/setup.properties
+      echo "db.connection.url=jdbc:mysql://${nodes.sqldb.address}/" >> /opt/tomcat/webapps/setup.properties
+      echo "db.name=db_opencms" >> /opt/tomcat/webapps/setup.properties
+      echo "db.create.db=true" >> /opt/tomcat/webapps/setup.properties
+      echo "db.create.tables=true" >> /opt/tomcat/webapps/setup.properties
+      echo "db.dropDb=true" >> /opt/tomcat/webapps/setup.properties
+      echo "db.jdbc.driver=org.gjt.mm.mysql.Driver" >> /opt/tomcat/webapps/setup.properties
+      echo "server.url=https://${env.domain}" >> /opt/tomcat/webapps/setup.properties
+      echo "server.id=OpenCmsServer" >> /opt/tomcat/webapps/setup.properties
+  run-setup:
+  - cmd[cp]: |-
+      cd /opt/tomcat/webapps/ROOT/WEB-INF
+      chmod +x ./setup.sh
+      ./setup.sh -path /opt/tomcat/webapps/setup.properties >> /var/log/run.log 2>&1
   restart:
-    - restartContainers:
-        nodeGroup: sqldb
-    - restartContainers:
-        nodeGroup: cp
-
+  - restartContainers:
+      nodeGroup: sqldb
+  - restartContainers:
+      nodeGroup: cp
 success: /text/success-text.md
