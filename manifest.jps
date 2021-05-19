@@ -1,11 +1,11 @@
 type: install
 id: opencms
-name: OpenCMS
+name: OpenCms
 homepage: http://www.opencms.org/
 startPage: overview/
 logo: /images/opencms.png
 baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
-description: OpenCMS from Alkacon Software is a professional, easy to use website
+description: OpenCms from Alkacon Software is a professional, easy to use website
   content management system. OpenCms helps content managers worldwide to create and
   maintain beautiful websites fast and efficiently.
 categories:
