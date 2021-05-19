@@ -20,7 +20,7 @@ OpenCms is based on Java and XML technology. It can be deployed in an open sourc
 Layer                |     Server    | Number of CTs <br/> by default | Cloudlets per CT <br/> (reserved/dynamic) | Options
 -------------------- | --------------| :----------------------------: | :---------------------------------------: | :-----:
 AS                   | Tomcat Java |       1                        |           1 / 32                          | -
-DB                   |    MariaDB      |       1                        |           1 / 8                           | -
+DB                   |    MariaDB      |       1                        |           2 / 8                           | -
 
 * AS - Application server 
 * DB - Database 
