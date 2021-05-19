@@ -5,9 +5,9 @@
 The JPS package deploys [OpenCms](http://www.opencms.org/) that initially contains 1 application server and 1 database container. 
 
 ### Highlights
-This package is designed to deploy OpenCms environment is a professional, easy to use website content management system from Alkacon Software.<br />
+This package is designed to deploy OpenCms environment, a professional, easy to use website content management system from Alkacon Software.<br />
 OpenCMS helps content managers worldwide to create and maintain beautiful websites fast and efficiently.<br />
-The fully browser based user interface features configurable editors for structured content with well defined fields. Alternatively, content can be created using an integrated WYSIWYG editor similar to well known office applications. A sophisticated template engine enforces a site-wide corporate layout and W3C standard compliance for all content.
+It has a fully browser based user interface with configurable editor for structured content with well defined fields. Alternatively, content can be created using an integrated WYSIWYG editor similar to well known office applications. A template engine enforces a site-wide corporate layout and W3C standard compliance for all content.
 
 OpenCms is based on Java and XML technology. It can be deployed in an open source environment (e.g. Linux, Apache, Tomcat, MariaDB) as well as on commercial components (e.g.  Windows NT, IIS, BEA Weblogic, Oracle).
 
