@@ -12,7 +12,7 @@ categories:
 - apps/content-management
 - apps/cms
 ssl: true
-engine: java11
+engine: openjdk11
 nodes:
 - cloudlets: 32
   fixedCloudlets: 1
