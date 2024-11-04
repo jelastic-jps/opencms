@@ -4,13 +4,17 @@ name: OpenCms
 homepage: http://www.opencms.org/
 startPage: overview/
 logo: /images/opencms.png
-baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
 description: OpenCms from Alkacon Software is a professional, easy to use website
   content management system. OpenCms helps content managers worldwide to create and
   maintain beautiful websites fast and efficiently.
 categories:
 - apps/content-management
 - apps/cms
+
+baseUrl: https://raw.githubusercontent.com/sych74/opencms/master
+mixins:
+- configs/vers.yaml
+
 ssl: true
 engine: openjdk11
 nodes:
@@ -22,18 +26,20 @@ nodes:
   nodeType: mariadb10
 
 onInstall:
-- deploy
+- deployApp
 - set-SQL-settings
 - add-autonfig-file
 - run-setup
 - restart
 
 actions:
-  deploy:
-    deploy:
-      archive: https://github.com/jelastic-jps/opencms/raw/master/dumps/opencms-11.0.2.war
-      name: opencms-11.0.2.war
-      context: ROOT
+  deployApp:
+    - cmd[cp]: |-
+        cd /tmp/;
+        curl -fsSL "http://www.opencms.org/downloads/opencms/opencms-${globals.version_opencms}.zip" -o /tmp/opencms.zip;
+        unzip -o opencms.zip -d opencms;
+        mv opencms/opencms.war /opt/tomcat/webapps/ROOT.war;
+        sudo jem service stop; rm -rf /opt/tomcat/webapps/ROOT; sudo jem service start;
   set-SQL-settings:
     prepareSqlDatabase:
     - nodeType: mariadb10
@@ -68,8 +74,7 @@ actions:
   run-setup:
   - cmd[cp]: |-
       cd /opt/tomcat/webapps/ROOT/WEB-INF
-      chmod +x ./setup.sh
-      ./setup.sh -path /opt/tomcat/webapps/setup.properties >> /var/log/run.log 2>&1
+      bash setup.sh -path /opt/tomcat/webapps/setup.properties >> /var/log/run.log 2>&1
   restart:
   - restartContainers:
       nodeGroup: sqldb
