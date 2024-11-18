@@ -11,7 +11,7 @@ categories:
 - apps/content-management
 - apps/cms
 
-baseUrl: https://raw.githubusercontent.com/sych74/opencms/master
+baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
 mixins:
 - configs/vers.yaml
 
