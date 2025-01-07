@@ -29,6 +29,7 @@ onInstall:
 - deployApp
 - set-SQL-settings
 - add-autonfig-file
+- restart
 - run-setup
 - restart
 
