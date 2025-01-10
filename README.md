@@ -1,42 +1,34 @@
-[![OpenCms](images/logo_opencms.gif)](../../../opencms)
+<p align="center"> 
+<img src="images/opencms.png" alt="OpenCms">
+</p>
 
-## OpenCms
+# OpenCms
 
-The JPS package deploys [OpenCms](http://www.opencms.org/) that initially contains 1 application server and 1 database container. 
+The package deploys the [OpenCms](http://www.opencms.org/) solution - an open-source content management system (CMS) that allows users to create and manage complex websites quickly and efficiently. OpenCms features a user-friendly fully browser-based interface and flexible template engine, making it suitable for both small and large-scale web projects.
 
-### Highlights
-This package is designed to deploy OpenCms environment, a professional, easy to use website content management system from Alkacon Software.<br />
-OpenCMS helps content managers worldwide to create and maintain beautiful websites fast and efficiently.<br />
-It has a fully browser based user interface with configurable editor for structured content with well defined fields. Alternatively, content can be created using an integrated WYSIWYG editor similar to well known office applications. A template engine enforces a site-wide corporate layout and W3C standard compliance for all content.
 
-OpenCms is based on Java and XML technology. It can be deployed in an open source environment (e.g. Linux, Apache, Tomcat, MariaDB) as well as on commercial components (e.g.  Windows NT, IIS, BEA Weblogic, Oracle).
+## Environment Topology
 
-### Environment Topology
+This package creates a dedicated OpenCms environment that contains one application server and one database container. It automatically deploys and sets the OpenCms application. The automatic vertical scaling is enabled out of the box, and [horizontal scaling](https://www.virtuozzo.com/application-platform-docs/automatic-horizontal-scaling/) can be configured (if needed). The default software stacks utilized in the package are the following:
 
-![opencms-environment-topology](images/opencms-environment-topology.png)
+- Tomcat 9 application server (Java 11)
+- MariaDB 10 database
+- OpenCms 18
 
-### Specifics
 
-Layer                |     Server    | Number of CTs <br/> by default | Cloudlets per CT <br/> (reserved/dynamic) | Options
--------------------- | --------------| :----------------------------: | :---------------------------------------: | :-----:
-AS                   | Tomcat Java |       1                        |           1 / 32                          | -
-DB                   |    MariaDB      |       1                        |           2 / 8                           | -
+## Deployment to Cloud
 
-* AS - Application server 
-* DB - Database 
-* CT - Container
+To get your OpenCms solution, click the "**Deploy to Cloud**" button below, specify your email address within the widget, choose one of the [Virtuozzo Public Cloud Providers](https://www.virtuozzo.com/application-platform-partners/), and confirm by clicking **Install**.
 
-**OpenCms Version**: 11.0.2<br/>
-**Tomcat Version**: 9<br/>
-**Java Engine Version**: 11<br/>
-**MariaDB Database Version**: 10
+[![Deploy to Cloud](https://raw.githubusercontent.com/jelastic-jps/common/main/images/deploy-to-cloud.png)](https://www.virtuozzo.com/install/?manifest=https://raw.githubusercontent.com/jelastic-jps/opencms/refs/heads/master/manifest.jps)
 
-### Deployment
+> If you already have a Virtuozzo Application Platform (VAP) account, you can deploy this solution from the [Marketplace](https://www.virtuozzo.com/application-platform-docs/marketplace/) or [import](https://www.virtuozzo.com/application-platform-docs/environment-import/) a manifest file from this repository.
 
-In order to get this solution instantly deployed, click the "DEPLOY TO JELASTIC" button, specify your email address within the widget, choose one of the [Jelastic Public Cloud providers](https://jelastic.cloud) and press Install.
 
-[![GET IT HOSTED](https://raw.githubusercontent.com/jelastic-jps/jpswiki/master/images/getithosted.png)](https://jelastic.com/install-application/?manifest=https%3A%2F%2Fgithub.com%2Fjelastic-jps%2Fopencms%2Fraw%2Fmaster%2Fmanifest.jps)
+## Installation Process
 
-To deploy this package to Jelastic Private Cloud, import [this JPS manifest](../../raw/master/manifest.jps) within your dashboard ([detailed instruction](https://docs.jelastic.com/environment-export-import#import)).
+In the opened installation window at the VAP dashboard, provide a preferred environment and display names, choose a region (if available), and confirm the installation.
 
-More information about Jelastic JPS package and about installation widget for your website can be found in the [Jelastic JPS Application Package](https://github.com/jelastic-jps/jpswiki/wiki/Jelastic-JPS-Application-Package) reference.
+![OpenCms deployment wizard](images/opencms-deployment-wizard.png)
+
+Your OpenCms application will be automatically installed in a few minutes.
