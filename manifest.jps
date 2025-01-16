@@ -4,9 +4,7 @@ name: OpenCms
 homepage: http://www.opencms.org/
 startPage: overview/
 logo: /images/opencms.png
-description: OpenCms from Alkacon Software is a professional, easy to use website
-  content management system. OpenCms helps content managers worldwide to create and
-  maintain beautiful websites fast and efficiently.
+description: OpenCms is an open-source content management system (CMS) that allows users to create and manage complex websites quickly and efficiently. OpenCms features a user-friendly fully browser-based interface and flexible template engine, making it suitable for both small and large-scale web projects.
 categories:
 - apps/content-management
 - apps/cms
@@ -81,4 +79,6 @@ actions:
       nodeGroup: sqldb
   - restartContainers:
       nodeGroup: cp
-success: /text/success-text.md
+success:
+  email: /text/success-email.md
+  text: /text/success-text.md
