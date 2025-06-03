@@ -9,7 +9,7 @@ categories:
 - apps/content-management
 - apps/cms
 
-baseUrl: https://raw.githubusercontent.com/jelastic-jps/opencms/master
+baseUrl: https://cdn.jsdelivr.net/gh/jelastic-jps/opencms@master
 mixins:
 - configs/vers.yaml
 
