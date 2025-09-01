@@ -35,7 +35,7 @@ actions:
   deployApp:
     - cmd[cp]: |-
         cd /tmp/;
-        curl -fsSL "http://www.opencms.org/downloads/opencms/opencms-${globals.version_opencms}.zip" -o /tmp/opencms.zip;
+        curl -fsSL "https://github.com/alkacon/opencms-core/releases/download/build_18_0_0/opencms-${globals.version_opencms}-distribution.zip" -o /tmp/opencms.zip;
         unzip -o opencms.zip -d opencms;
         mv opencms/opencms.war /opt/tomcat/webapps/ROOT.war;
         sudo jem service stop; rm -rf /opt/tomcat/webapps/ROOT; sudo jem service start;
